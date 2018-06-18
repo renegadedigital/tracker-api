@@ -1,0 +1,37 @@
+type Institution {
+  id: ID!
+  name: String!
+  logo: String
+  athleteLimit: Int
+  coachLimit: Int
+}
+
+
+input InstitutionInput {
+  name: String!
+  logo: String
+  athleteLimit: Int
+  coachLimit: Int
+}
+
+
+input InstitutionPatch {
+  id: ID!
+  name: String
+  logo: String
+  athleteLimit: Int
+  coachLimit: Int
+}
+
+
+type Mutation {
+  createInstitution(institution: InstitutionInput!) : Institution!
+  deleteInstitution(institution: ID!) : Institution!
+  updateInstitution(institution: InstitutionPatch!) : Institution!
+}
+
+
+type Query {
+  institution(id: ID!) : Institution
+  institutions(name: String) : [Institution!]
+}

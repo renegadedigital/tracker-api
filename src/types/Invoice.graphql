@@ -1,0 +1,78 @@
+type Invoice {
+  id: ID!
+  account: Account!
+  dateDue: LocalDate!
+  dateSent: LocalDate!
+  discount: Float!
+  lineItems: [InvoiceLineItem!]!
+  tax: Float!
+  timeCreated: Instant!
+  timeUpdated: Instant!
+  total: Float!
+  validity: Period!
+}
+
+
+enum InvoiceStatus {
+  CANCELLED
+  DELETED
+  OVERDUE
+  OWING
+  PAID
+  UNSENT
+  VOID
+}
+
+
+type InvoiceLineItem {
+  description: String!
+  includesTax: Boolean!
+  name: String!
+  quantity: Int!
+  timeAddition: Period!
+  unitPrice: Float!
+}
+
+
+input InvoiceLineItemInput {
+  description: String!
+  includesTax: Boolean!
+  name: String!
+  quantity: Int!
+  timeAddition: Period!
+  unitPrice: Float!
+}
+
+
+input InvoiceInput {
+  account: ID!
+  dateSent: LocalDate!
+  lineItems: [InvoiceLineItemInput!]!
+  validity: Period!
+}
+
+
+input InvoicePatch {
+  id: ID!
+  account: ID
+  dateSent: LocalDate
+  lineItems: [InvoiceLineItemInput!]
+  validity: Period
+}
+
+
+type Mutation {
+  activateInvoice(invoice: ID!) : Invoice!
+  cancelInvoice(invoice: ID!) : Invoice!
+  createInvoice(invoice: InvoiceInput!) : Invoice!
+  deleteInvoice(invoice: ID!) : Invoice!
+  generateInvoice(account: ID, time: LocalDate!) : Invoice!
+  updateInvoice(invoice: InvoicePatch!) : Invoice!
+  voidInvoice(invoice: ID!) : Invoice!
+}
+
+
+type Query {
+  invoice(id: ID!) : Invoice
+  invoices(after: LocalDate, before: LocalDate, status: InvoiceStatus, account: ID) : [Invoice!]
+}

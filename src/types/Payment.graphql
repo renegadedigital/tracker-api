@@ -1,0 +1,40 @@
+type Payment {
+  id: ID!
+  amount: Dollars!
+  invoice: ID!
+  method: PaymentMethod
+}
+
+
+enum PaymentMethod {
+  CASH
+  CARD
+  BANK_TRANSFER
+}
+
+
+input PaymentInput {
+  amount: Dollars!
+  invoice: ID!
+  method: PaymentMethod
+}
+
+
+input PaymentPatch {
+  id: ID!
+  amount: Dollars
+  invoice: ID
+  method: PaymentMethod
+}
+
+
+type Mutation {
+  createPayment(payment: PaymentInput!) : Payment!
+  deletePayment(payment: ID!) : Payment!
+  updatePayment(payment: PaymentPatch!) : Payment!
+}
+
+
+type Query {
+  payments(invoice: ID) : [Payment!]
+}

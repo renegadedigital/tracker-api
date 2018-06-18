@@ -1,0 +1,96 @@
+type Test {
+  id: ID!
+  groupTest: Boolean!
+  limit: TestLimit
+  name: String!
+  specs: [TestSpec]
+  type: TestType!
+  variation: String
+}
+
+
+input TestInput {
+  groupTest: Boolean!
+  limit: TestLimitInput
+  name: String!
+  specs: [TestSpecInput]
+  type: TestType!
+  variation: String
+}
+
+
+
+input TestPatch {
+  id: ID!
+  groupTest: Boolean
+  limit: TestLimitInput
+  name: String
+  specs: [TestSpecInput]
+  type: TestType
+  variation: String
+}
+
+
+
+type TestLimit {
+  metric: TestMetric!
+  value: Float!
+}
+
+
+input TestLimitInput {
+  metric: TestMetric!
+  value: Float!
+}
+
+
+enum TestMetric {
+  DISTANCE
+  TIME
+}
+
+
+enum TestUnit {
+  M_YD
+  M_FT
+  CM_IN
+  CM_FT
+  KG_LB
+  PERCENT
+}
+
+
+type TestSpec {
+  id: ID!
+  name: String!
+  unit: TestUnit!
+}
+
+
+input TestSpecInput {
+  name: String!
+  label: String!
+  unit: TestUnit!
+}
+
+
+enum TestType {
+  MEASUREMENTS
+  SHOTS 
+  STAGES 
+  TIME 
+  SPLITS 
+}
+
+
+type Mutation {
+  createTest(test: TestInput!) : Test!
+  deleteTest(test: ID!) : Test!
+  updateTest(test: TestPatch!) : Test!
+}
+
+
+type Query {
+  test(id: ID!) : Test
+  tests(name: String, variation: String, type: TestType) : [Test!]
+}

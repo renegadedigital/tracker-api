@@ -1,0 +1,29 @@
+enum AccountType {
+  ATHLETE
+  COACH
+  DIRECTOR
+  GUEST
+}
+
+
+type Account {
+  id: ID!
+  email: Email!
+  firstName: String!
+  institution: Institution
+  lastName: String!
+  photo: String
+  type: AccountType!
+}
+
+
+type Mutation {
+  requestPasswordReset(email: String!) : Boolean!
+  resetPassword(code: String!, password: String!) : Boolean!
+}
+
+
+
+type Query {
+  logIn(email: String, password: String) : JWT 
+}

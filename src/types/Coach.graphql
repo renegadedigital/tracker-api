@@ -1,0 +1,41 @@
+type Coach {
+  id: ID!
+  email: Email!
+  firstName: String!
+  institution: Institution
+  lastName: String!
+  photo: String
+  billed: Boolean!
+}
+
+
+input CoachInput {
+  email: Email!
+  firstName: String!
+  institution: ID!
+  lastName: String!
+  photo: String
+}
+
+
+input CoachPatch {
+  id: ID!
+  email: Email
+  firstName: String
+  institution: ID
+  lastName: String
+  photo: String
+}
+
+
+type Mutation {
+  createCoach(coach: CoachInput!) : Coach!
+  deleteCoach(coach: ID!) : Coach!
+  updateCoach(coach: CoachPatch!) : Coach!
+}
+
+
+type Query {
+  coach(id: ID!) : Coach
+  coaches(firstName: String, lastName: String, email: String, institution: ID) : [Coach!]
+}

@@ -1,0 +1,33 @@
+type Guest {
+  id: ID!
+  email: Email!
+  firstName: String!
+  lastName: String!
+  photo: String
+}
+
+
+input GuestInput {
+  email: Email!
+  firstName: String!
+  lastName: String!
+  photo: String
+}
+
+
+input GuestPatch {
+  id: ID!
+  email: Email
+  firstName: String
+  lastName: String
+  photo: String
+}
+
+
+type Mutation {
+  createGuest(guest: GuestInput!) : Guest!
+  deleteGuest(guest: Int!) : Guest!
+  favoriteGuest(guest: ID!) : [Guest!]
+  unfavoriteGuest(guest: ID!) : [Guest!] 
+  updateGuest(guest: GuestPatch!) : Guest!
+}

@@ -1,0 +1,27 @@
+type Result {
+  id: ID!
+  athlete: Athlete!
+  test: Test!
+  timeCompleted: Instant!
+  value: Float
+}
+
+
+input ResultInput {
+  athlete: ID!
+  test: ID!
+  timeCompleted: Instant!
+  value: Float
+}
+
+
+type Mutation {
+  createResult(result: ResultInput!) : Result!
+  deleteResult(result: ID!) : Result!
+}
+
+
+type Query {
+  result(id: ID!) : Result
+  results(athlete: ID, test: ID, after: Instant, before: Instant) : [Result!]
+}

@@ -1,0 +1,9 @@
+scalar Centimeters
+scalar Dollars
+scalar Email
+scalar ID
+scalar Instant
+scalar JWT
+scalar LocalDate 
+scalar Period
+scalar Seconds

@@ -1,0 +1,41 @@
+type Director {
+  id: ID!
+  email: Email!
+  firstName: String!
+  institution: Institution
+  lastName: String!
+  photo: String
+  billed: Boolean!
+}
+
+
+input DirectorInput {
+  email: Email!
+  firstName: String!
+  institution: ID!
+  lastName: String!
+  photo: String
+}
+
+
+input DirectorPatch {
+  id: ID!
+  email: Email
+  firstName: String
+  institution: ID
+  lastName: String
+  photo: String
+}
+
+
+type Mutation {
+  createDirector(director: DirectorInput!) : Director!
+  deleteDirector(director: ID!) : Director!
+  updateDirector(director: DirectorPatch!) : Director!
+}
+
+
+type Query {
+  director(id: ID!) : Director
+  directors(firstName: String, lastName: String, email: String, institution: ID) : [Director!]
+}

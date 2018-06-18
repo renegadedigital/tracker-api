@@ -1,0 +1,125 @@
+type Match {
+  id: ID!
+  away: String
+  awayFouls: Int!
+  awayScore: Int!
+  home: Team!
+  homeFouls: Int!
+  homeScore: Int!
+  numStatisticians: Int!
+  periodDuration: Seconds!
+  periods: Int!
+  start: Instant
+  timeScheduled: Instant!
+}
+
+
+input MatchInput {
+  away: String
+  home: ID!
+  numStatisticians: Int!
+  periodDuration: Seconds!
+  periods: Int!
+  start: Instant
+  timeScheduled: Instant!
+}
+
+
+input MatchPatch {
+  id: ID!
+  away: String
+  home: ID!
+  numStatisticians: Int
+  periodDuration: Seconds
+  periods: Int
+  start: Instant
+  timeScheduled: Instant
+}
+
+
+type MatchAction {
+  id: ID!
+  action: String!
+  athlete: Athlete!
+  match: Match!
+  timeCompleted: MatchTime!
+  position: MatchPosition 
+}
+
+
+input MatchActionInput {
+  action: String!
+  athlete: ID!
+  position: MatchPositionInput
+  timeCompleted: MatchTimeInput!
+  match: ID!
+}
+
+
+input MatchActionPatch {
+  id: ID!
+  action: String
+  athlete: ID
+  position: MatchPositionInput
+  timeCompleted: MatchTimeInput
+  match: ID
+}
+
+
+type MatchPosition {
+  x: Centimeters!
+  y: Centimeters!
+}
+
+
+input MatchPositionInput {
+  x: Centimeters!
+  y: Centimeters!
+}
+
+
+type MatchStat {
+  athlete: Athlete!
+  count: Int!
+  match: Match!
+  name: String!
+}
+
+
+type MatchTime {
+  period: Int!
+  elapsed: Seconds!
+}
+
+
+input MatchTimeInput {
+  period: Int!
+  elapsed: Seconds!
+}
+
+
+type Mutation {
+  createMatch(match: MatchInput!) : Match!
+  createMatchAction(matchAction: MatchActionInput!) : MatchAction!
+  deleteMatch(match: ID!) : Match!
+  deleteMatchAction(matchAction: ID!) : MatchAction!
+  pauseMatchPeriod(match: ID!, time: Instant!) : Match!
+  setMatchOpponentFouls(fouls: Int!) : Match!
+  setMatchOpponentPoints(fouls: Int!) : Match!
+  startMatchPeriod(match: ID!, period: Int!, time: Instant!) : Match!
+  updateMatch(match: MatchPatch!) : Match!
+  updateMatchAction(matchAction: MatchActionPatch!) : MatchAction!
+}
+
+
+type Query {
+  match(id: ID!) : Match
+  matches(after: Instant, before: Instant, team: ID) : [Match!]
+  matchStat(athlete: ID!, name: String!) : MatchStat
+  matchStats(athlete: ID, name: String, match: ID, before: Instant, after: Instant) : [MatchStat!]
+}
+
+
+type Subscription {
+  matchUpdated : Match
+}

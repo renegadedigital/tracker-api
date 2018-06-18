@@ -1,0 +1,37 @@
+type Product {
+  id: ID!
+  description: String!
+  name: String!
+  price: Dollars!
+  timeAddition: Period!
+}
+
+
+input ProductInput {
+  description: String!
+  name: String!
+  price: Dollars!
+  timeAddition: Period!
+}
+
+
+input ProductPatch {
+  id: ID!
+  description: String
+  name: String
+  price: Dollars
+  timeAddition: Period
+}
+
+
+type Mutation {
+  createProduct(product: ProductInput!) : Product!
+  deleteProduct(product: ID!) : Product!
+  updateProduct(product: ProductPatch!) : Product!
+}
+
+
+type Query {
+  product(id: ID!): Product 
+  products(name: String): [Product!]
+}

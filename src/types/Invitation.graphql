@@ -1,0 +1,30 @@
+union ShareableEntity = Athlete | Group
+
+
+enum ShareableType {
+  ATHLETE
+  GROUP
+}
+
+
+type Invitation {
+  id: ID!
+  code: String!
+  for: Guest
+  to: ShareableEntity!
+  type: ShareableType
+}
+
+
+type Mutation {
+  acceptInviteCode(code: String!) : Invitation!
+  inviteToViewAthlete(athlete: ID!) : Invitation!
+  inviteToViewGroup(group: ID!) : Invitation!
+  revokeInvitation(invitation: ID) : Invitation!
+}
+
+
+type Query {
+  invitation(id: ID!) : Invitation
+  invitations : [Invitation!]
+}

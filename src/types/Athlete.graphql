@@ -1,0 +1,45 @@
+type Athlete {
+  id: ID!
+  billed: Boolean!
+  email: Email!
+  firstName: String!
+  groups: [Group]
+  institution: Institution
+  invoices: [Invoice]
+  lastName: String!
+  photo: String
+  teams: [Team]
+}
+
+
+input AthleteInput {
+  email: Email!
+  firstName: String!
+  institution: ID!
+  lastName: String!
+  photo: String
+}
+
+
+input AthletePatch {
+  id: ID!
+  email: Email
+  firstName: String
+  institution: ID 
+  lastName: String
+  photo: String
+}
+
+
+type Mutation {
+  createAthlete(athlete: AthleteInput!) : Athlete!
+  deleteAthlete(athlete: Int!) : Athlete!
+  favoriteAthlete(athlete: ID!) : [Athlete!]
+  unfavoriteAthlete(athlete: ID!) : [Athlete!] 
+  updateAthlete(athlete: AthletePatch!) : Athlete!
+}
+
+type Query {
+  athlete(id: ID!) : Athlete
+  athletes(firstName: String, lastName: String, email: String, institution: ID) : [Athlete!]
+}

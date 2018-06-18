@@ -1,0 +1,47 @@
+type Team {
+  id: ID!
+  logo: String
+  name: String!
+  players: [Player!]!
+}
+
+
+input TeamInput {
+  logo: String
+  name: String!
+  players: [PlayerInput!]!
+}
+
+
+input TeamPatch {
+  id: ID!
+  players: [PlayerInput!]
+  name: String
+  logo: String
+}
+
+
+type Player {
+  player: Player!
+  number: Int
+}
+
+
+input PlayerInput {
+  player: ID!
+  number: Int
+}
+
+
+
+type Mutation {
+  createTeam(team: TeamInput!) : Team!
+  deleteTeam(team: ID!) : Team!
+  updateTeam(team: TeamPatch!) : Team!
+}
+
+
+type Query {
+  team(id: ID!) : Team
+  teams(name: String) : [Team!]
+}

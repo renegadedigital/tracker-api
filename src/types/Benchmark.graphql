@@ -1,0 +1,33 @@
+type Benchmark {
+  id: ID!
+  test: Test!
+  group: Group!
+  value: Float!
+}
+
+
+input BenchmarkInput {
+  test: ID!
+  group: ID
+  value: Float! 
+}
+
+
+input BenchmarkPatch {
+  id: ID!
+  test: ID 
+  group: ID 
+  value: Float
+}
+
+
+type Mutation {
+  createBenchmark(benchmark: BenchmarkInput!) : Benchmark!
+  deleteBenchmark(benchmark: ID!) : Benchmark!
+  updateBenchmark(benchmark: BenchmarkPatch!) : Benchmark!
+}
+
+
+type Query {
+  benchmarks(test: ID, group: ID) : [Benchmark!]
+}

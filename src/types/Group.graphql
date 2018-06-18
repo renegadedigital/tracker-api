@@ -1,0 +1,34 @@
+type Group {
+  id: ID!
+  logo: String
+  name: String!
+  athletes: [Athlete!]!
+}
+
+
+input GroupInput {
+  logo: String
+  name: String!
+  athletes: [ID!]!
+}
+
+
+input GroupPatch {
+  id: ID!
+  athletes: [ID!]
+  name: String
+  logo: String
+}
+
+
+type Mutation {
+  createGroup(group: GroupInput!) : Group!
+  deleteGroup(group: ID!) : Group!
+  updateGroup(group: GroupPatch!) : Group!
+}
+
+
+type Query {
+  group(id: ID!) : Group
+  groups(name: String) : [Group!]
+}
