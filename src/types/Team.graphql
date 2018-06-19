@@ -1,12 +1,16 @@
 type Team {
   id: ID!
+  players: [Player!]!
+  institution: Institution!
   logo: String
   name: String!
-  players: [Player!]!
+  createdAt: Instant!
+  updatedAt: Instant!
 }
 
 
 input TeamInput {
+  institutionId: ID!
   logo: String
   name: String!
   players: [PlayerInput!]!
@@ -21,27 +25,14 @@ input TeamPatch {
 }
 
 
-type Player {
-  player: Player!
-  number: Int
-}
-
-
-input PlayerInput {
-  player: ID!
-  number: Int
-}
-
-
-
 type Mutation {
   createTeam(team: TeamInput!) : Team!
-  deleteTeam(team: ID!) : Team!
+  deleteTeam(teamId: ID!) : Team!
   updateTeam(team: TeamPatch!) : Team!
 }
 
 
 type Query {
   team(id: ID!) : Team
-  teams(name: String) : [Team!]
+  teams(name: String) : [Team!]!
 }

@@ -85,7 +85,7 @@ enum TestType {
 
 type Mutation {
   createTest(test: TestInput!) : Test!
-  deleteTest(test: ID!) : Test!
+  deleteTest(testId: ID!) : Test!
   updateTest(test: TestPatch!) : Test!
 }
 

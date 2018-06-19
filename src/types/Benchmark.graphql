@@ -3,31 +3,33 @@ type Benchmark {
   test: Test!
   group: Group!
   value: Float!
+  createdAt: Instant!
+  updatedAt: Instant!
 }
 
 
 input BenchmarkInput {
-  test: ID!
-  group: ID
+  testId: ID!
+  groupId: ID
   value: Float! 
 }
 
 
 input BenchmarkPatch {
   id: ID!
-  test: ID 
-  group: ID 
+  testId: ID 
+  groupId: ID 
   value: Float
 }
 
 
 type Mutation {
   createBenchmark(benchmark: BenchmarkInput!) : Benchmark!
-  deleteBenchmark(benchmark: ID!) : Benchmark!
+  deleteBenchmark(benchmarkId: ID!) : Benchmark!
   updateBenchmark(benchmark: BenchmarkPatch!) : Benchmark!
 }
 
 
 type Query {
-  benchmarks(test: ID, group: ID) : [Benchmark!]
+  benchmarks(testId: ID, groupId: ID) : [Benchmark!]
 }

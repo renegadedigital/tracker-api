@@ -1,22 +1,40 @@
-import { buildSchema } from "graphql"
+import { SubscriptionServer } from "subscriptions-transport-ws"
+import { createServer } from "http"
+import { execute, subscribe } from "graphql"
+import { graphiqlExpress, graphqlExpress } from "graphql-server-express"
+import { makeExecutableSchema } from "graphql-tools"
+import bodyParser from "body-parser"
 import cors from "cors"
 import express from "express"
-import graphqlHTTP from "express-graphql"
+import timesyncServer from "timesync/server"
 
 import rootValue from "./resolvers"
 import types from "./types"
 
 
-const schema = buildSchema(types)
 
+const PORT = 4000
+const schema = makeExecutableSchema({ typeDefs: types, resolvers: rootValue })
 
 const app = express()
+const server = createServer(app)
+
 app.use(cors())
+app.use(express.static("docs"))
+app.use("/timesync", timesyncServer.requestHandler)
+app.use("/graphql", bodyParser.json(), graphqlExpress({ schema }))
+app.use(
+  "/graphiql", 
+  (req, res, next) => graphiqlExpress({
+    endpointURL: "/graphql",
+    subscriptionsEndpoint: `ws://${req.hostname}:${PORT}/subscriptions`
+  })(req, res, next)
+)
 
-app.use("/graphql", graphqlHTTP({
-  schema,
-  rootValue,
-  graphiql: true
-}))
-
-app.listen(4000)
+server.listen(PORT, () => {
+  console.log(`GraphQL Server now running on http://localhost:${PORT}`)
+  new SubscriptionServer(
+    { execute, subscribe, schema },
+    { server, path: "/subscriptions" }
+  )
+})

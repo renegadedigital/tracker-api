@@ -6,13 +6,15 @@ type Director {
   lastName: String!
   photo: String
   billed: Boolean!
+  createdAt: Instant!
+  updatedAt: Instant!
 }
 
 
 input DirectorInput {
   email: Email!
   firstName: String!
-  institution: ID!
+  institutionId: ID!
   lastName: String!
   photo: String
 }
@@ -22,20 +24,20 @@ input DirectorPatch {
   id: ID!
   email: Email
   firstName: String
-  institution: ID
+  institutionId: ID
   lastName: String
   photo: String
 }
 
 
 type Mutation {
-  createDirector(director: DirectorInput!) : Director!
-  deleteDirector(director: ID!) : Director!
+  createDirector(director: DirectorInput!, password: Password) : Director!
+  deleteDirector(directorId: ID!) : Director!
   updateDirector(director: DirectorPatch!) : Director!
 }
 
 
 type Query {
   director(id: ID!) : Director
-  directors(firstName: String, lastName: String, email: String, institution: ID) : [Director!]
+  directors(firstName: String, lastName: String, email: String, institutionId: ID) : [Director!]
 }

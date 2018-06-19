@@ -1,34 +1,59 @@
+enum GroupType {
+  group
+  team
+}
+
+
 type Group {
   id: ID!
+  players: [Player!]!
+  institution: Institution!
   logo: String
   name: String!
-  athletes: [Athlete!]!
+  type: GroupType
+  createdAt: Instant!
+  updatedAt: Instant!
 }
 
 
 input GroupInput {
+  institutionId: ID!
   logo: String
   name: String!
-  athletes: [ID!]!
+  type: GroupType
 }
 
 
 input GroupPatch {
   id: ID!
-  athletes: [ID!]
+  players: [PlayerInput!]!
   name: String
   logo: String
+  type: GroupType
 }
+
+
+type Player {
+  athlete: Athlete!
+  number: Int
+}
+
+
+input PlayerInput {
+  athleteId: ID!
+  number: Int
+}
+
 
 
 type Mutation {
   createGroup(group: GroupInput!) : Group!
-  deleteGroup(group: ID!) : Group!
+  deleteGroup(groupId: ID!) : Group!
   updateGroup(group: GroupPatch!) : Group!
 }
 
 
 type Query {
   group(id: ID!) : Group
-  groups(name: String) : [Group!]
+  groups(name: String) : [Group!]!
 }

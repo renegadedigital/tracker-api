@@ -1,7 +1,7 @@
 type Payment {
   id: ID!
   amount: Dollars!
-  invoice: ID!
+  invoiceId: ID!
   method: PaymentMethod
 }
 
@@ -15,7 +15,7 @@ enum PaymentMethod {
 
 input PaymentInput {
   amount: Dollars!
-  invoice: ID!
+  invoiceId: ID!
   method: PaymentMethod
 }
 
@@ -23,18 +23,18 @@ input PaymentInput {
 input PaymentPatch {
   id: ID!
   amount: Dollars
-  invoice: ID
+  invoiceId: ID
   method: PaymentMethod
 }
 
 
 type Mutation {
   createPayment(payment: PaymentInput!) : Payment!
-  deletePayment(payment: ID!) : Payment!
+  deletePayment(paymentId: ID!) : Payment!
   updatePayment(payment: PaymentPatch!) : Payment!
 }
 
 
 type Query {
-  payments(invoice: ID) : [Payment!]
+  payments(invoiceId: ID) : [Payment!]
 }

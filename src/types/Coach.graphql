@@ -6,13 +6,15 @@ type Coach {
   lastName: String!
   photo: String
   billed: Boolean!
+  createdAt: Instant!
+  updatedAt: Instant!
 }
 
 
 input CoachInput {
   email: Email!
   firstName: String!
-  institution: ID!
+  institutionId: ID!
   lastName: String!
   photo: String
 }
@@ -22,20 +24,20 @@ input CoachPatch {
   id: ID!
   email: Email
   firstName: String
-  institution: ID
+  institutionId: ID
   lastName: String
   photo: String
 }
 
 
 type Mutation {
-  createCoach(coach: CoachInput!) : Coach!
-  deleteCoach(coach: ID!) : Coach!
+  createCoach(coach: CoachInput!, password: Password) : Coach!
+  deleteCoach(coachId: ID!) : Coach!
   updateCoach(coach: CoachPatch!) : Coach!
 }
 
 
 type Query {
   coach(id: ID!) : Coach
-  coaches(firstName: String, lastName: String, email: String, institution: ID) : [Coach!]
+  coaches(firstName: String, lastName: String, email: String, institutionId: ID) : [Coach!]
 }

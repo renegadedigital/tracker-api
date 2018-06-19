@@ -4,6 +4,8 @@ type Guest {
   firstName: String!
   lastName: String!
   photo: String
+  createdAt: Instant!
+  updatedAt: Instant!
 }
 
 
@@ -25,9 +27,7 @@ input GuestPatch {
 
 
 type Mutation {
-  createGuest(guest: GuestInput!) : Guest!
-  deleteGuest(guest: Int!) : Guest!
-  favoriteGuest(guest: ID!) : [Guest!]
-  unfavoriteGuest(guest: ID!) : [Guest!] 
+  createGuest(guest: GuestInput!, password: Password) : Guest!
+  deleteGuest(guestId: ID!) : Guest!
   updateGuest(guest: GuestPatch!) : Guest!
 }

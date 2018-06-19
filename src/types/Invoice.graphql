@@ -1,13 +1,13 @@
 type Invoice {
   id: ID!
   account: Account!
-  dateDue: LocalDate!
-  dateSent: LocalDate!
+  dueDate: LocalDate!
+  sentDate: LocalDate!
   discount: Float!
   lineItems: [InvoiceLineItem!]!
   tax: Float!
-  timeCreated: Instant!
-  timeUpdated: Instant!
+  createdAt: Instant!
+  updatedAt: Instant!
   total: Float!
   validity: Period!
 }
@@ -45,8 +45,8 @@ input InvoiceLineItemInput {
 
 
 input InvoiceInput {
-  account: ID!
-  dateSent: LocalDate!
+  accountId: ID!
+  sentDate: LocalDate!
   lineItems: [InvoiceLineItemInput!]!
   validity: Period!
 }
@@ -54,25 +54,25 @@ input InvoiceInput {
 
 input InvoicePatch {
   id: ID!
-  account: ID
-  dateSent: LocalDate
+  accountId: ID
+  sentDate: LocalDate
   lineItems: [InvoiceLineItemInput!]
   validity: Period
 }
 
 
 type Mutation {
-  activateInvoice(invoice: ID!) : Invoice!
-  cancelInvoice(invoice: ID!) : Invoice!
+  activateInvoice(invoiceId: ID!) : Invoice!
+  cancelInvoice(invoiceId: ID!) : Invoice!
   createInvoice(invoice: InvoiceInput!) : Invoice!
-  deleteInvoice(invoice: ID!) : Invoice!
-  generateInvoice(account: ID, time: LocalDate!) : Invoice!
+  deleteInvoice(invoiceId: ID!) : Invoice!
+  generateInvoice(accountId: ID, time: LocalDate!) : Invoice!
   updateInvoice(invoice: InvoicePatch!) : Invoice!
-  voidInvoice(invoice: ID!) : Invoice!
+  voidInvoice(invoiceId: ID!) : Invoice!
 }
 
 
 type Query {
   invoice(id: ID!) : Invoice
-  invoices(after: LocalDate, before: LocalDate, status: InvoiceStatus, account: ID) : [Invoice!]
+  invoices(after: LocalDate, before: LocalDate, status: InvoiceStatus, accountId: ID) : [Invoice!]
 }

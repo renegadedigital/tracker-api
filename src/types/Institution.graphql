@@ -4,6 +4,8 @@ type Institution {
   logo: String
   athleteLimit: Int
   coachLimit: Int
+  createdAt: Instant!
+  updatedAt: Instant!
 }
 
 
@@ -26,7 +28,7 @@ input InstitutionPatch {
 
 type Mutation {
   createInstitution(institution: InstitutionInput!) : Institution!
-  deleteInstitution(institution: ID!) : Institution!
+  deleteInstitution(institutionId: ID!) : Institution!
   updateInstitution(institution: InstitutionPatch!) : Institution!
 }
 

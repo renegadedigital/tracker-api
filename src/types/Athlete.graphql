@@ -4,20 +4,24 @@ type Athlete {
   email: Email!
   firstName: String!
   groups: [Group]
-  institution: Institution
+  institution: Institution!
   invoices: [Invoice]
   lastName: String!
   photo: String
+  position: String
   teams: [Team]
+  createdAt: Instant!
+  updatedAt: Instant!
 }
 
 
 input AthleteInput {
   email: Email!
   firstName: String!
-  institution: ID!
+  institutionId: ID! 
   lastName: String!
   photo: String
+  position: String
 }
 
 
@@ -25,21 +29,23 @@ input AthletePatch {
   id: ID!
   email: Email
   firstName: String
-  institution: ID 
+  institutionId: ID 
   lastName: String
   photo: String
+  position: String
 }
 
 
 type Mutation {
-  createAthlete(athlete: AthleteInput!) : Athlete!
-  deleteAthlete(athlete: Int!) : Athlete!
-  favoriteAthlete(athlete: ID!) : [Athlete!]
-  unfavoriteAthlete(athlete: ID!) : [Athlete!] 
+  createAthlete(athlete: AthleteInput!, password: Password) : Athlete!
+  deleteAthlete(athleteId: ID!) : Athlete!
+  favoriteAthlete(athleteId: ID!) : [Athlete!]
+  unfavoriteAthlete(athleteId: ID!) : [Athlete!] 
   updateAthlete(athlete: AthletePatch!) : Athlete!
 }
 
+
 type Query {
   athlete(id: ID!) : Athlete
-  athletes(firstName: String, lastName: String, email: String, institution: ID) : [Athlete!]
+  athletes(name: String, email: String, institutionId: ID) : [Athlete!]
 }

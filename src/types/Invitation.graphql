@@ -13,14 +13,16 @@ type Invitation {
   for: Guest
   to: ShareableEntity!
   type: ShareableType
+  createdAt: Instant!
+  updatedAt: Instant!
 }
 
 
 type Mutation {
   acceptInviteCode(code: String!) : Invitation!
-  inviteToViewAthlete(athlete: ID!) : Invitation!
-  inviteToViewGroup(group: ID!) : Invitation!
-  revokeInvitation(invitation: ID) : Invitation!
+  inviteToViewAthlete(athleteId: ID!) : Invitation!
+  inviteToViewGroup(groupId: ID!) : Invitation!
+  revokeInvitation(invitationId: ID) : Invitation!
 }
 
 

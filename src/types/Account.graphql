@@ -14,12 +14,15 @@ type Account {
   lastName: String!
   photo: String
   type: AccountType!
+  createdAt: Instant!
+  updatedAt: Instant!
 }
 
 
 type Mutation {
+  changePassword(id: ID!, oldPassword: Password!, newPassword: Password!) : Boolean!
   requestPasswordReset(email: String!) : Boolean!
-  resetPassword(code: String!, password: String!) : Boolean!
+  resetPassword(code: String!, email: Email!, password: String!) : Boolean!
 }
 
 

@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "tracker",
+    "password": "test123",
+    "database": "tracker",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "tracker",
+    "password": "test123",
+    "database": "tracker",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "tracker",
+    "password": "test123",
+    "database": "tracker",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}

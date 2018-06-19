@@ -4,6 +4,8 @@ type Product {
   name: String!
   price: Dollars!
   timeAddition: Period!
+  createdAt: Instant!
+  updatedAt: Instant!
 }
 
 
@@ -26,7 +28,7 @@ input ProductPatch {
 
 type Mutation {
   createProduct(product: ProductInput!) : Product!
-  deleteProduct(product: ID!) : Product!
+  deleteProduct(productId: ID!) : Product!
   updateProduct(product: ProductPatch!) : Product!
 }
 

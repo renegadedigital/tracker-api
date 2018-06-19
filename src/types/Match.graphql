@@ -1,80 +1,78 @@
 type Match {
   id: ID!
-  away: String
+  away: String!
   awayFouls: Int!
   awayScore: Int!
   home: Team!
   homeFouls: Int!
   homeScore: Int!
   numStatisticians: Int!
-  periodDuration: Seconds!
-  periods: Int!
-  start: Instant
-  timeScheduled: Instant!
+  period: Int
+  periodDuration: Seconds
+  periodStartedAt: Instant
+  periodPausedAt: Instant
+  periods: Int
+  scheduledAt: Instant!
 }
 
 
 input MatchInput {
-  away: String
-  home: ID!
+  away: String!
+  homeId: ID!
   numStatisticians: Int!
-  periodDuration: Seconds!
-  periods: Int!
-  start: Instant
-  timeScheduled: Instant!
+  period: Int
+  periodDuration: Seconds
+  periods: Int
+  scheduledAt: Instant!
 }
 
 
 input MatchPatch {
   id: ID!
   away: String
-  home: ID!
+  homeId: ID!
   numStatisticians: Int
+  period: Int
   periodDuration: Seconds
+  periodStartedAt: Instant
+  periodPausedAt: Instant
   periods: Int
-  start: Instant
-  timeScheduled: Instant
+  scheduledAt: Instant
 }
 
 
 type MatchAction {
   id: ID!
   action: String!
-  athlete: Athlete!
+  athlete: Athlete
   match: Match!
-  timeCompleted: MatchTime!
-  position: MatchPosition 
+  completedTime: Seconds!
+  completedPeriod: Int!
+  positionX: Centimeters
+  positionY: Centimeters
 }
 
 
 input MatchActionInput {
   action: String!
-  athlete: ID!
-  position: MatchPositionInput
-  timeCompleted: MatchTimeInput!
-  match: ID!
+  athleteId: ID
+  substituteId: ID
+  positionX: Centimeters,
+  positionY: Centimeters,
+  completedAt: Seconds!
+  matchId: ID!
 }
 
 
 input MatchActionPatch {
   id: ID!
   action: String
-  athlete: ID
-  position: MatchPositionInput
-  timeCompleted: MatchTimeInput
-  match: ID
-}
-
-
-type MatchPosition {
-  x: Centimeters!
-  y: Centimeters!
-}
-
-
-input MatchPositionInput {
-  x: Centimeters!
-  y: Centimeters!
+  athleteId: ID
+  substituteId: ID
+  positionX: Centimeters
+  positionY: Centimeters
+  completedAt: Seconds! 
+  matchId: ID
 }
 
 
@@ -86,27 +84,15 @@ type MatchStat {
 }
 
 
-type MatchTime {
-  period: Int!
-  elapsed: Seconds!
-}
-
-
-input MatchTimeInput {
-  period: Int!
-  elapsed: Seconds!
-}
-
-
 type Mutation {
   createMatch(match: MatchInput!) : Match!
   createMatchAction(matchAction: MatchActionInput!) : MatchAction!
-  deleteMatch(match: ID!) : Match!
-  deleteMatchAction(matchAction: ID!) : MatchAction!
-  pauseMatchPeriod(match: ID!, time: Instant!) : Match!
-  setMatchOpponentFouls(fouls: Int!) : Match!
-  setMatchOpponentPoints(fouls: Int!) : Match!
-  startMatchPeriod(match: ID!, period: Int!, time: Instant!) : Match!
+  deleteMatch(matchId: ID!) : Match!
+  deleteMatchAction(matchActionId: ID!) : MatchAction!
+  pauseMatchPeriod(matchId: ID!, time: Instant!) : Match!
+  setMatchAwayFouls(matchId: ID!, fouls: Int!) : Match!
+  setMatchAwayScore(matchId: ID!, score: Int!) : Match!
+  startMatchPeriod(matchId: ID!, period: Int!, elapsed: Seconds!, time: Instant!) : Match!
   updateMatch(match: MatchPatch!) : Match!
   updateMatchAction(matchAction: MatchActionPatch!) : MatchAction!
 }
@@ -114,12 +100,12 @@ type Mutation {
 
 type Query {
   match(id: ID!) : Match
-  matches(after: Instant, before: Instant, team: ID) : [Match!]
-  matchStat(athlete: ID!, name: String!) : MatchStat
-  matchStats(athlete: ID, name: String, match: ID, before: Instant, after: Instant) : [MatchStat!]
+  matches(after: Instant, before: Instant, teamId: ID) : [Match!]
+  matchStat(athleteId: ID!, name: String!) : MatchStat
+  matchStats(athleteId: ID, name: String, matchId: ID, before: Instant, after: Instant) : [MatchStat!]
 }
 
 
 type Subscription {
-  matchUpdated : Match
+  matchUpdated(id: ID!) : Match
 }
